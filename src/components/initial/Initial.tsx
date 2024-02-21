@@ -1,19 +1,26 @@
-import { Button, Image, StyleSheet, Text, TextInput, View } from "react-native"
+import { useNavigation } from "@react-navigation/native";
+import { Button, Image, StyleSheet, Text, View } from "react-native";
 
-const SignUp = () => {
+const Initial = () => {
+    const navigation = useNavigation<any>();
+
+    const handleNavigate = () => {
+        navigation.navigate('Register');
+    }
+
     return (
         <View style={styles.container}>
             <Image
                 source={require('../../../assets/welcome.png')}
                 style={{ width: 200, height: 200, position: 'relative', left: 90 }}
             />
-            <Text style={styles.signupText}>Welcome</Text>
+            <Text style={styles.signupText}>Olá, Seja bem vindo</Text>
             <Text style={styles.signupMinText}>Faça seu login ou registre!</Text>
             <View style={styles.card}>
                 <Button title="Login" color={'#fff'}/>
             </View>
             <View style={styles.card}>
-                <Button title="Registro" color={'#fff'}/>
+                <Button title="Registro" color={'#fff'} onPress={handleNavigate}/>
             </View>
         </View>
     )
@@ -47,15 +54,11 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: '#1F41BB',
         borderRadius: 4,
-        shadowColor: 'rgba(100, 100, 100, 0.2)',
-        shadowRadius: 8,
-        shadowOpacity: 0.8,
-        shadowOffset: { width: 2, height: 2 },
-        margin: 16,
-        padding: 16,
-        borderWidth: 1, // Adiciona uma borda fina
-        borderColor: '#ddd', // Define a cor da borda
+        margin: 10,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ddd'
     }
 });
 
-export default SignUp;
+export default Initial;

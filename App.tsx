@@ -1,7 +1,18 @@
-import SignUp from './src/components/card/Card';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Initial from './src/components/initial/Initial';
+import Register from './src/components/register/Register';
+
+const Stack = createNativeStackNavigator();
+
 
 export default function App() {
   return (
-    <SignUp />
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name='Welcome' component={Initial} />
+        <Stack.Screen name='Register' component={Register} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
