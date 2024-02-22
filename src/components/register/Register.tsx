@@ -1,9 +1,27 @@
+import axios from "axios";
 import { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 const Register = () => {
     const [inputOne, setText1] = useState('');
     const [inputTwo, setText2] = useState('');
+
+    const API_URL = process.env.API_URL;
+
+    const handlerRegister = async () => {
+        try {
+            const response = await axios.post(`${API_URL}registro`, {
+                username: inputOne,
+                password: inputTwo
+            });
+
+            if (response.data) {
+                console.log(response);
+            }
+        } catch (error) {
+            console.error('Erro: ', error);
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -22,7 +40,7 @@ const Register = () => {
                 value={inputTwo}
             />
             <View style={styles.card}>
-                <Button title="Registrar" color={'#fff'} />
+                <Button title="Registrar" color={'#fff'} onPress={handlerRegister}/>
             </View>
         </View>
     )
