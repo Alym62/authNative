@@ -1,23 +1,29 @@
 import axios from "axios";
 import { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Role } from "../../dto/enums/dto.enum";
+import { UsuarioDTO } from "../../dto/usuario.dto";
+import { CheckBox } from "react-native-elements";
 
+// TODO: Estruturar as funções.
 const Register = () => {
-    const [inputOne, setText1] = useState('');
-    const [inputTwo, setText2] = useState('');
+    const usuario = new UsuarioDTO();
+    const rolesList: Role[] = [Role.ADMIN, Role.USER];
 
-    const API_URL = process.env.API_URL;
+    const [inputOne, setInputOne] = useState(usuario.username);
+    const [inputTwo, setInputTwo] = useState(usuario.password);
+    const [selectedRoles, setSelectedRoles] = useState(rolesList);
+
+    const API_URL = "http://192.168.15.110:8080/api/v1/auth/";
+
 
     const handlerRegister = async () => {
         try {
-            const response = await axios.post(`${API_URL}registro`, {
+            await axios.post(`${API_URL}registro`, {
                 username: inputOne,
-                password: inputTwo
+                password: inputTwo,
+                roles: selectedRoles
             });
-
-            if (response.data) {
-                console.log(response);
-            }
         } catch (error) {
             console.error('Erro: ', error);
         }
@@ -30,17 +36,32 @@ const Register = () => {
             <TextInput
                 style={styles.input}
                 placeholder="Digite seu username"
-                onChangeText={text => setText1(text)}
+                onChangeText={text => setInputOne(text)}
                 value={inputOne}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Digite sua senha"
-                onChangeText={text => setText2(text)}
+                onChangeText={text => setInputTwo(text)}
                 value={inputTwo}
             />
+            <View style={styles.roleContainer}>
+                {rolesList.map((role, index) => (
+                    <CheckBox
+                        key={index}
+                        title={role}
+                        checked={selectedRoles.includes(role)}
+                        onPress={() => {
+                            const updatedRoles = selectedRoles.includes(role)
+                                ? selectedRoles.filter(selectedRole => selectedRole !== role)
+                                : [...selectedRoles, role];
+                            setSelectedRoles(updatedRoles);
+                        }}
+                    />
+                ))}
+            </View>
             <View style={styles.card}>
-                <Button title="Registrar" color={'#fff'} onPress={handlerRegister}/>
+                <Button title="Registrar" color={'#fff'} onPress={handlerRegister} />
             </View>
         </View>
     )
@@ -52,6 +73,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         gap: 20
+    },
+    roleContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '80%',
+        marginBottom: 20,
     },
     input: {
         width: 250,
