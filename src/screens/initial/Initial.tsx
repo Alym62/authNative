@@ -1,11 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Initial = () => {
     const navigation = useNavigation<any>();
+    const navigationLogin = useNavigation<any>();
 
     const handleNavigate = () => {
         navigation.navigate('Register');
+    }
+
+    const handleNavigateLogin = () => {
+        navigationLogin.navigate('Login');
     }
 
     return (
@@ -17,10 +23,10 @@ const Initial = () => {
             <Text style={styles.signupText}>Olá, Seja bem vindo</Text>
             <Text style={styles.signupMinText}>Faça seu login ou registre!</Text>
             <View style={styles.card}>
-                <Button title="Login" color={'#fff'}/>
+                <Button title="Login" color={'#fff'} onPress={handleNavigateLogin} />
             </View>
             <View style={styles.card}>
-                <Button title="Registro" color={'#fff'} onPress={handleNavigate}/>
+                <Button title="Registro" color={'#fff'} onPress={handleNavigate} />
             </View>
         </View>
     )
@@ -28,7 +34,7 @@ const Initial = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: 'linear-gradient(to bottom, #1277e5, #7b95eb, #b0b5f1, #dbd9f8, #ffffff);',
         flex: 1,
         justifyContent: 'center',
         gap: 50

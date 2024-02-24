@@ -31,17 +31,17 @@ const Register = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.signupText}>Registro Aqui!</Text>
+            <Text style={styles.signupText}>Registro</Text>
             <Text style={styles.signupMinText}>Registre sua conta aqui para saber mais informações.</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Digite seu username"
+                placeholder="Novo username"
                 onChangeText={text => setInputOne(text)}
                 value={inputOne}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Digite sua senha"
+                placeholder="Nova senha"
                 onChangeText={text => setInputTwo(text)}
                 value={inputTwo}
             />
