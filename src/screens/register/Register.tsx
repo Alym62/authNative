@@ -12,9 +12,10 @@ const Register = () => {
 
     const [inputOne, setInputOne] = useState(usuario.username);
     const [inputTwo, setInputTwo] = useState(usuario.password);
-    const [selectedRoles, setSelectedRoles] = useState(rolesList);
+    const [selectedRole, setSelectedRole] = useState("");
 
-    const API_URL = "http://192.168.15.110:8080/api/v1/auth/";
+    // TODO: Sempre checar o TCP em que ele está abrindo.
+    const API_URL = "http://192.168.15.111:8080/api/v1/auth/";
 
 
     const handlerRegister = async () => {
@@ -22,7 +23,7 @@ const Register = () => {
             await axios.post(`${API_URL}registro`, {
                 username: inputOne,
                 password: inputTwo,
-                roles: selectedRoles
+                role: selectedRole
             });
         } catch (error) {
             console.error('Erro: ', error);
@@ -50,13 +51,8 @@ const Register = () => {
                     <CheckBox
                         key={index}
                         title={role}
-                        checked={selectedRoles.includes(role)}
-                        onPress={() => {
-                            const updatedRoles = selectedRoles.includes(role)
-                                ? selectedRoles.filter(selectedRole => selectedRole !== role)
-                                : [...selectedRoles, role];
-                            setSelectedRoles(updatedRoles);
-                        }}
+                        checked={selectedRole === role}
+                        onPress={() => setSelectedRole(role)}
                     />
                 ))}
             </View>
