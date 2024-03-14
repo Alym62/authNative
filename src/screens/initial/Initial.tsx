@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
-import { LinearGradient } from 'expo-linear-gradient';
 
 const Initial = () => {
     const navigation = useNavigation<any>();

@@ -2,9 +2,12 @@ import { useState } from "react"
 import { Button, StyleSheet, Text, TextInput, View } from "react-native"
 import { UsuarioDTO } from "../../dto/usuario.dto";
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
     const usuario = new UsuarioDTO();
+    const navigation = useNavigation<any>();
 
     const [inputOneLogin, setInputOneLogin] = useState(usuario.username);
     const [inputTwoLogin, setInputTwoLogin] = useState(usuario.password);
@@ -14,10 +17,18 @@ const Login = () => {
 
     const handlerLogin = async () => {
         try {
-            await axios.post(`${API_URL}login`, {
+            const response = await axios.post(`${API_URL}login`, {
                 username: inputOneLogin,
                 password: inputTwoLogin,
             });
+
+            const token = response.data;
+
+            await AsyncStorage.setItem('token', token);
+
+            console.log('Esse é o token do login: ', token);
+
+            navigation.navigate('User');
         } catch (error) {
             console.error('Erro: ', error);
         }
